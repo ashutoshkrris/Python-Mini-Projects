@@ -1,0 +1,76 @@
+#Importing libraries
+
+import sys
+import time
+import getpass
+
+def deleteLine(file,st):                    #Fucntion to delete password
+  fn = open(file+".txt")
+  output = []
+  for line in fn:
+    if not line.startswith(st):
+      output.append(line)
+  fn.close()
+  f = open(file+".txt","w+")
+  f.writelines(output)
+  f.close()
+
+def menu(c,username):                       #main function that would handle all the passwords and files
+  if c == 1:
+    site = str(input("\nEnter the site name : "))
+    password = str(input("Enter the password : "))
+    with open(username+".txt","a") as op:
+      op.write(f"{site} : {password}\n")
+    print(f"{site} and password associated with it has been saved successfully.\n")
+
+  elif c == 2:
+    wsite = str(input("\nFor which site do you want to retrieve your password : "))
+    f = open(username+".txt")
+    for line in f:
+      line = line.rstrip()
+      if line.startswith(wsite):
+        print(f"Retrieving password for the site {wsite}")
+        time.sleep(2)
+        print(f"\nYour credentials are :\n{line}\n")
+
+  elif c == 3:
+    rsite = str(input("\nFor which site do you want to remove password : "))
+    print(f"Removing password for {rsite}...")
+    time.sleep(2)
+    deleteLine(username,rsite)
+    print(f"{rsite} and the password associated with it has been removed successfully.\n")
+
+  elif c == 4:
+    csite = str(input("\nFor which site do you want to change password : "))
+    deleteLine(username,csite)
+    nsite = str(input("\nFor verification,please enter site again : "))
+    npassword = str(input("Enter the new password : "))
+    with open(username+".txt","w+") as op:
+      op.write(f"{nsite} : {npassword}\n")
+    print(f"{nsite} and password associated with it has been saved successfully.\n")
+
+  elif c == 5:
+    print("Sayonara!!")
+    sys.exit()
+
+
+def menuuu():
+  username = "Ashutosh"                     #you may enter your own name here
+  print(f"Hi {username}. \nI am KeePass,your very own Password Assistant.\nYes,you heard me right. I can help you remember passwords for all your sites. \nJust tell me once and I shall remember it forever.\n")
+  print("Here are some actions for you : ")
+  while(True):
+    print("1. Add a password")
+    print("2. Retrieve a password")
+    print("3. Remove a password")
+    print("4. Change a password")
+    print("5. Exit")
+    choice = int(input("\nEnter your choice : "))
+    menu(choice,username)
+
+while(True):                                 #the user will be prompted for password to login
+    passwd = getpass.getpass(prompt="Fuel me with your password please : ")
+    if passwd == "ashutosh":                          #set your own password here
+        print("Login Successful")
+        menuuu()
+    else:
+        print("Wrong Password!!\n")
