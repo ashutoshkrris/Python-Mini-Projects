@@ -24,8 +24,13 @@ def menu(c,username):                       #main function that would handle all
     print(f"{site} and password associated with it has been saved successfully.\n")
 
   elif c == 2:
+    print("\nYou have saved the password for the following sites : \n")
+    f = open(username+".txt","r")
+    siteList = [line.split(None, 1)[0] for line in f]
+    f.close()
+    for s in siteList:
+      print(s)
     wsite = str(input("\nFor which site do you want to retrieve your password : "))
-    f = open(username+".txt")
     for line in f:
       line = line.rstrip()
       if line.startswith(wsite):
@@ -55,7 +60,7 @@ def menu(c,username):                       #main function that would handle all
 
 
 def menuuu():
-  username = "Ashutosh"                     #you may enter your own name here
+  username = "urName"                     #you may enter your own name here
   print(f"Hi {username}. \nI am KeePass,your very own Password Assistant.\nYes,you heard me right. I can help you remember passwords for all your sites. \nJust tell me once and I shall remember it forever.\n")
   print("Here are some actions for you : ")
   while(True):
@@ -69,7 +74,7 @@ def menuuu():
 
 while(True):                                 #the user will be prompted for password to login
     passwd = getpass.getpass(prompt="Fuel me with your password please : ")
-    if passwd == "ashutosh":                          #set your own password here
+    if passwd == "urPassword":                          #set your own password here
         print("Login Successful")
         menuuu()
     else:
